@@ -45,13 +45,14 @@ def respond():
 
     random.shuffle(users)
 
-    #results = requests.post('https://slack.com/api/chat.postMessage', data={
-    #    'token': API_TOKEN,
-    #    'channel': CHANNEL_NAME,
-    #    'text': ", ".join(users)
-    #})
+    requests.post('https://slack.com/api/chat.postMessage', data={
+        'token': API_TOKEN,
+        'channel': CHANNEL_NAME,
+        'text': ", ".join(users)
+    })
 
-    return ", ".join(users)
+    return "everything worked fine"
+
 
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support

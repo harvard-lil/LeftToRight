@@ -32,7 +32,6 @@ def respond():
         'channel': channel_id,
     }).json()['members']
 
-
     users = []
     for member in members:
         users.append(requests.post('https://slack.com/api/users.info', data={
@@ -46,7 +45,7 @@ def respond():
         'text': ", ".join(users)
     })
 
-    if results.response_code == 200:
+    if results.status_code == 200:
         return jsonify({"status": "ok"})
     else:
         return jsonify({"status": "whoops"})

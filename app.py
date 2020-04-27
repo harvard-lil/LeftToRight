@@ -1,5 +1,6 @@
 import os
 import requests
+import random
 
 from flask import Flask, request, jsonify
 CHANNEL_NAME=os.environ.get('LTR_CHANNEL_NAME')
@@ -34,24 +35,23 @@ def respond():
 
     users = []
     for member in members:
-        users.append(requests.post('https://slack.com/api/users.info', data={
+        name = requests.post('https://slack.com/api/users.info', data={
             'token': API_TOKEN,
             'user': member,
-        }).json()['user']['real_name'])
+        }).json()['user']['real_name']
+        if name == 'lefttoright':
+            continue
+        users.append(name)
 
-    results = requests.post('https://slack.com/api/chat.postMessage', data={
-        'token': API_TOKEN,
-        'channel': CHANNEL_NAME,
-        'text': ", ".join(users)
-    })
+    random.shuffle(users)
 
-    if results.status_code == 200:
-        return jsonify({"status": "ok"})
-    else:
-        return jsonify({"status": "whoops"})
+    #results = requests.post('https://slack.com/api/chat.postMessage', data={
+    #    'token': API_TOKEN,
+    #    'channel': CHANNEL_NAME,
+    #    'text': ", ".join(users)
+    #})
 
-    return jsonify(dict(results))
-
+    return ", ".join(users)
 
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support

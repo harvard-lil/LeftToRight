@@ -89,7 +89,7 @@ def nickname(name):
     name_parts = name.split()
     if len(name_parts) < 2:
         nick = get_random_rhyme(name) or random.choice(mobster_nicknames)
-        return "{}– A.K.A. \"{}\"".format(name, nick).title()
+        return "{}– A.K.A. \"{} {}\"".format(name, random.choice(nick_prefix), nick).title()
     else:
         name_parts_for_nick = name_parts.copy()
         random.shuffle(name_parts_for_nick)
@@ -150,7 +150,7 @@ def leet_speak(name):
     'm': ['|\/|'],
     'n': ['И'],
     'o': ['0', 'Ø'],
-    'p': ['{}'],
+    'p': ['p'],
     'q': ['kw', 'Q'],
     'r': ['Я', '®'],
     's': ['5', '$', '§'],
@@ -167,7 +167,7 @@ def leet_speak(name):
             output += random.choice(leet[char])
         else:
             output += char
-    return "=-= {} =-=".format(output)
+    return "-= {} =-".format(output)
 
 def transformation_router(index, input):
     #transformations = [leet_speak, umlauted, shift_vowels, nickname]

@@ -33,7 +33,7 @@ def respond():
     command = request.form['command']
     text = request.form['text'].lower() if 'text' in request.form else 'random'
     if 'help' in text:
-        return "Usage: {} normal|1337|shifted|nicknames|random(default)".format(command)
+        return "Usage: {} normal|1337|shifted|nicknames|random(default)\n{} help (displays this message)".format(command, command)
 
     incoming_token = request.args.get("token", None)
     if not incoming_token or incoming_token != LOCAL_TOKEN:

@@ -33,9 +33,16 @@ def respond():
     command = request.form['command']
     text = request.form['text'].lower() if 'text' in request.form else 'random'
     if 'help' in text:
-        return "Usage—\n{0} executed without arguments will present the scrum order, and with a 60% probability of " \
-               "applying a randomly chosen text transformation.\n{0} (normal | 1337 | shifted | nicknames | random)\n" \
-               "/{0} help (displays this message)".format(command)
+        return jsonify({
+            "response_type": "in_channel",
+            "text": "usage",
+            "attachments": [
+                {"text": "{0} executed without arguments will present the scrum order, and with a 60% probability of " 
+                         "applying a randomly chosen text transformation.".format(command)},
+                {"text": "{0} (normal | 1337 | shifted | nicknames | random)".format(command)},
+                {"text": "{0} help (displays this message)".format(command)},
+            ]
+        })
 
     incoming_token = request.args.get("token", None)
     if not incoming_token or incoming_token != LOCAL_TOKEN:
@@ -73,13 +80,17 @@ def respond():
     elif 'nicknames' in text:
         users = [nickname(user) for user in users]
 
-    requests.post('https://slack.com/api/chat.postMessage', data={
-        'token': API_TOKEN,
-        'channel': channel_id,
-        'text': ", ".join(users)
-    })
+    response = {
+        "response_type": "in_channel",
+        "text": ", ".join(users),
+        "attachments": [
+            {
+                "text": ", ".join(users)
+            }
+        ]
+    }
 
-    return "names calculated"
+    return jsonify(response)
 
 
 def get_random_rhyme(word):

@@ -4,7 +4,6 @@ import random
 from Phyme import Phyme
 
 from flask import Flask, request, jsonify
-CHANNEL_NAME = os.environ.get('LTR_CHANNEL_NAME')
 API_TOKEN = os.environ.get('LTR_SLACK_API_TOKEN')
 LOCAL_TOKEN = os.environ.get('LTR_LOCAL_TOKEN')
 RHYME_AVOID_LIST = os.environ.get('LTR_AVOID_LIST').split(',') if 'LTR_AVOID_LIST' in os.environ else []
@@ -13,45 +12,67 @@ BOT_IGNORE_LIST = os.environ.get('BOT_IGNORE_LIST').split(',') if 'BOT_IGNORE_LI
 app = Flask(__name__)
 ph = Phyme()
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/', methods=['POST'])
 def respond():
-    # Retrieve the name from url parameter
+    """
+        token = gIkuvaNzQIHg97ATvDxqgjtO
+        & team_id = T0001
+        & team_domain = example
+        & enterprise_id = E0001
+        & enterprise_name = Globular % 20
+        Construct % 20
+        Inc
+        & channel_id = C2147483705
+        & channel_name = test
+        & user_id = U2147483697
+        & user_name = Steve
+        & command = / weather
+        & text = 94070
+    """
+    channel_id = request.form['channel_id']
+    text = request.form['text'].lower() if 'text' in request.form else 'random'
+    if 'help' in text:
+        return "Usage: {} normal|1337|shifted|nicknames|random(default)".format(command)
+
     incoming_token = request.args.get("token", None)
-    # Check if user sent a name at all
     if not incoming_token or incoming_token != LOCAL_TOKEN:
         raise Exception("local key error")
 
-    channels = requests.post('https://slack.com/api/conversations.list', data={
-        'token': API_TOKEN,
-        'types': 'private_channel'
-    }).json()['channels']
-
-    for channel in channels:
-        if channel['name'] == CHANNEL_NAME:
-            channel_id = channel['id']
-
-    members = requests.post('https://slack.com/api/conversations.members', data={
+    members_list = requests.post('https://slack.com/api/conversations.members', data={
         'token': API_TOKEN,
         'channel': channel_id,
-    }).json()['members']
+    }).json()
+
+    if not members_list['ok']:
+        return "This is probably a private channel that I'm not invited to. Invite me if you want me to work here."
 
     users = []
-    for member in members:
+    for member in members_list['members']:
         name = requests.post('https://slack.com/api/users.info', data={
             'token': API_TOKEN,
             'user': member,
-        }).json()['user']['real_name']
-        if name in BOT_IGNORE_LIST:
+        }).json()
+        if name['user']['real_name'] in BOT_IGNORE_LIST or not name['ok']:
             continue
-        users.append(name)
+        users.append(name['user']['real_name'])
 
     random.shuffle(users)
-    transform_roulette = random.randint(0, 3)
-    users = [transformation_router(transform_roulette, user) for user in users]
+
+    if not text or 'random' in text or text == '':
+        # rather than just randomly selecting between the transformations, let make it only half-likely you'll get a
+        # transformation to make it feel more special
+        transform_roulette = random.randint(0, 2)
+        users = [transformation_router(transform_roulette, user) for user in users]
+    elif '1337' in text:
+        users = [leet_speak(user) for user in users]
+    elif 'shifted' in text:
+        users = [shift_vowels(user) for user in users]
+    elif 'nicknames' in text:
+        users = [nickname(user) for user in users]
 
     requests.post('https://slack.com/api/chat.postMessage', data={
         'token': API_TOKEN,
-        'channel': CHANNEL_NAME,
+        'channel': channel_id,
         'text': ", ".join(users)
     })
 
@@ -80,15 +101,22 @@ def nickname(name):
                          "Benny Squint", "Mr. Bread", "Dopey Benny", "The Typewriter", "The Artichoke King",
                          "Shellackhead", "The Owl", "Louie Eggs", "The Clutch Hand", "14th Street Steve", "Corky",
                          "Flipper", "Legs DiCocco", "The Golfer", "The Reluctant Prince", "Georgie Neck", "Baldy Dom",
-                         "Larry Fab", "George from Canada"]
+                         "Larry Fab", "George from Canada", "Master of Disaster", "Dr. Doom", "Zero Cool",
+                         "Crash Override", "Acid Burn", "The Phantom Phreak", "Cereal Killer", "Lord Nikon",
+                         "The Plague", "The Gibson Killer", "Da Vinci"]
     nick_prefix = ["Sweet", "Swift", "Slick", "The", "The Mad", "Stylin'", "Big", "The Big", "Big City",
                    "Big Slack Attack", "Beast Mode", "Master", "Steel", "Diamond-Tipped", "Iron", "Cousin", "T-Tops",
                    "T-Bone", "Hackmaster", "Monster", "Grandmaster", "M.C.", "Poker Face", "Gold Tooth", "Maserati",
-                   "Fast Talkin'", "Glam", "The Animal", "Maddog"]
+                   "Fast Talkin'", "Glam", "The Animal", "Maddog", "Doctor"]
     name_parts = name.split()
     if len(name_parts) < 2:
-        nick = get_random_rhyme(name) or random.choice(mobster_nicknames)
-        return "{}– A.K.A. \"{} {}\"".format(name, random.choice(nick_prefix), nick).title()
+        nick = get_random_rhyme(name)
+
+        if not nick:
+            return "{}– A.K.A. \"{}\"".format(name, random.choice(mobster_nicknames)).title()
+        if random.randint(0, 10) > 4:
+            nick = "{} {}".format(name, random.choice(nick_prefix))
+        return "{}– A.K.A. \"{}\"".format(name, nick).title()
     else:
         name_parts_for_nick = name_parts.copy()
         random.shuffle(name_parts_for_nick)
@@ -99,7 +127,6 @@ def nickname(name):
                 continue
         if not nick:
             nick = get_random_rhyme(name_parts[1])
-
         if not nick:
             nick = random.choice(mobster_nicknames)
         else:
@@ -171,10 +198,7 @@ def leet_speak(name):
 def transformation_router(index, input):
     #transformations = [leet_speak, umlauted, shift_vowels, nickname]
     transformations = [leet_speak, shift_vowels, nickname]
-    if index < len(transformations):
-        return transformations[index](input)
-    else:
-        return(input.split()[0])
+    return transformations[index](input)
 
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support

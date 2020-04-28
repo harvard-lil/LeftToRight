@@ -8,6 +8,7 @@ CHANNEL_NAME = os.environ.get('LTR_CHANNEL_NAME')
 API_TOKEN = os.environ.get('LTR_SLACK_API_TOKEN')
 LOCAL_TOKEN = os.environ.get('LTR_LOCAL_TOKEN')
 RHYME_AVOID_LIST = os.environ.get('LTR_AVOID_LIST').split(',') if 'LTR_AVOID_LIST' in os.environ else []
+BOT_IGNORE_LIST = os.environ.get('BOT_IGNORE_LIST').split(',') if 'BOT_IGNORE_LIST' in os.environ else []
 
 app = Flask(__name__)
 ph = Phyme()
@@ -40,11 +41,9 @@ def respond():
             'token': API_TOKEN,
             'user': member,
         }).json()['user']['real_name']
-        if name == 'lefttoright':
+        if name in BOT_IGNORE_LIST:
             continue
         users.append(name)
-
-    users = ["Anastasia", "Andy Silva", "Adam Ziegler", "Rebecca Cremona", "Jack Cushman", "Kelly Fitzpatrick", "Clare Stanton", "Paul Deschner", "Ben Steinberg"]
 
     random.shuffle(users)
     transform_roulette = random.randint(0, 3)

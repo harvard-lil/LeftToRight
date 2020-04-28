@@ -30,6 +30,7 @@ def respond():
         & text = 94070
     """
     channel_id = request.form['channel_id']
+    command = request.form['command']
     text = request.form['text'].lower() if 'text' in request.form else 'random'
     if 'help' in text:
         return "Usage: {} normal|1337|shifted|nicknames|random(default)".format(command)

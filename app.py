@@ -82,12 +82,9 @@ def respond():
 
     response = {
         "response_type": "in_channel",
-        "text": ", ".join(users),
-        "attachments": [
-            {
-                "text": ", ".join(users)
-            }
-        ]
+        "text": "Scrum Order: ",
+        "attachments":
+            [{"text": "{}: {}".format(k + 1, v)} for k, v in enumerate(users)]
     }
 
     return jsonify(response)

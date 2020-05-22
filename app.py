@@ -39,7 +39,7 @@ def respond():
             "attachments": [
                 {"text": "{0} executed without arguments will present the scrum order, and with a 60% probability of " 
                          "applying a randomly chosen text transformation.".format(command)},
-                {"text": "{0} (normal | 1337 | shifted | nicknames | random)".format(command)},
+                {"text": "{0} (normal | 1337 | shifted | nicknames | jargon | random)".format(command)},
                 {"text": "{0} help (displays this message)".format(command)},
             ]
         })
@@ -78,6 +78,8 @@ def respond():
     elif 'shifted' in text:
         users = [shift_vowels(user) for user in users]
     elif 'nicknames' in text:
+        users = [nickname(user) for user in users]
+    elif 'jargon' in text:
         users = [nickname(user) for user in users]
 
     response = {
@@ -208,8 +210,65 @@ def leet_speak(name):
 
 def transformation_router(index, input):
     #transformations = [leet_speak, umlauted, shift_vowels, nickname]
-    transformations = [leet_speak, shift_vowels, nickname]
+    transformations = [leet_speak, shift_vowels, nickname, jargon]
     return transformations[index](input)
+
+
+def jargon(name):
+    verbs = ["reinvent", "unpack", "pencil-in", "touch base on", "maximize", "resonate with", "preplan", "preschedule",
+             "push the envelope on", "ideate about", "reincentivize", "deincentivize", "incentivize",
+             "get on board with",
+             "come up to speed on", "reprioritize", "deprioritize", "prioritize"
+                                                                    "fish or cut bait with", "evangelize",
+             "circle the wagons on", "circle back to", "do a deep dive on",
+             "innovate on", "enact change on", "give 110% on", "leverage", "take it to the next level with",
+             "get buy-in on", "make hay with", "move the needle on", "scale", "vertically integrate", "rearchitect",
+             "punt on", "make a business case for", "be a change agent for", "champion",
+             "proactively guesstimate about",
+             "heard cats for", "raise the bar on", "maintain radio silence on", "reach out about",
+             "avoid reinventing the wheel with", "take strides on", "task", "add value to", "become a stakeholder in",
+             "implement solutions", "monetize", "say \"it is what it is\" about", "bake in", "champion",
+             "avoid boiling the ocean with", "gain traction on", "utilize"]
+
+    adjectives = ["full-service", "robust", "high price-point", "best of breed", "frictionless", "turnkey",
+                  "game changing",
+                  "mission-critical", "most unique", "proactive", "seamless", "soup-to-nuts", "value-added", "win-win",
+                  "world class", "bleeding-edge"]
+
+    plural_nouns = ["dogfood", "hard stops", "solutions", "key learnings", "best practices", "core competencies",
+                    "Kool-Aid", "ecosystems", "800lb gorillas", "action items", "spinning plates",
+                    "bells and whistles", "brain dumps", "business cases", "stakeholders", "moving parts",
+                    "best practices",
+                    "change agents", "deliverables", "evangelists", "guesstimates", "hearded cats", "human capital",
+                    "rocket science", "brain surgery", "skin in the game", "valued partners",
+                    "bang for your buck", "low-hanging fruit", "magic bullets", "next steps",
+                    "pain points", "paradigm shifts", "secret sauce", "zero-sum games"]
+
+    prefix = ["Going forward", "At the end of the day", "Where the rubber hits the road",
+              "While we're all on the same page", "While things are still up in the air"]
+
+    suffix = ["with the big wigs", "in the c-suite", "and throw it over the fence", "on a level playing field",
+              "with a sense of urgency", "with an outside-of-the-box approach", "and run it up the flagpole"]
+
+    adjective = "" if random.random() > 0.5 else "{} ".format(random.choice(adjectives))
+    j = "{} will {} {}{}".format(
+        name,
+        random.choice(verbs),
+        adjective,
+        random.choice(plural_nouns)
+    )
+    prefix_suffix_seed = random.random()
+
+    if prefix_suffix_seed < 0.15:
+        j = "{}, {}".format(j, random.choice(suffix))
+    elif prefix_suffix_seed > 0.85:
+        j = "{}, {}".format(random.choice(prefix), j)
+
+    return "{}.".format(j.capitalize())
+
+
+print(jargon("Joe"))
+
 
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support

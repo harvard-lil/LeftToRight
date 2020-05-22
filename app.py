@@ -259,15 +259,12 @@ def jargon(name):
     )
     prefix_suffix_seed = random.random()
 
-    if prefix_suffix_seed < 0.15:
+    if prefix_suffix_seed < 0.25:
         j = "{}, {}".format(j, random.choice(suffix))
-    elif prefix_suffix_seed > 0.85:
+    elif prefix_suffix_seed > 0.75:
         j = "{}, {}".format(random.choice(prefix), j)
 
     return "{}.".format(j.capitalize())
-
-
-print(jargon("Joe"))
 
 
 if __name__ == '__main__':

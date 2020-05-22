@@ -220,7 +220,7 @@ def jargon(name):
              "get on board with",
              "come up to speed on", "reprioritize", "deprioritize", "prioritize"
                                                                     "fish or cut bait with", "evangelize",
-             "circle the wagons on", "circle back to", "do a deep dive on",
+             "circle the wagons on", "circle back around to", "do a deep dive on",
              "innovate on", "enact change on", "give 110% on", "leverage", "take it to the next level with",
              "get buy-in on", "make hay with", "move the needle on", "scale", "vertically integrate", "rearchitect",
              "punt on", "make a business case for", "be a change agent for", "champion",
@@ -231,9 +231,8 @@ def jargon(name):
              "avoid boiling the ocean with", "gain traction on", "utilize"]
 
     adjectives = ["full-service", "robust", "high price-point", "best of breed", "frictionless", "turnkey",
-                  "game changing",
-                  "mission-critical", "most unique", "proactive", "seamless", "soup-to-nuts", "value-added", "win-win",
-                  "world class", "bleeding-edge"]
+                  "game changing", "mission-critical", "proactive", "seamless", "soup-to-nuts", "value-added",
+                  "win-win", "world class", "bleeding-edge"]
 
     plural_nouns = ["dogfood", "hard stops", "solutions", "key learnings", "best practices", "core competencies",
                     "Kool-Aid", "ecosystems", "800lb gorillas", "action items", "spinning plates",
@@ -247,7 +246,7 @@ def jargon(name):
     prefix = ["Going forward", "At the end of the day", "Where the rubber hits the road",
               "While we're all on the same page", "While things are still up in the air"]
 
-    suffix = ["with the big wigs", "in the c-suite", "and throw it over the fence", "on a level playing field",
+    suffix = ["with the big wigs", "in the c-suite", ", and throw it over the fence", "on a level playing field",
               "with a sense of urgency", "with an outside-of-the-box approach", "and run it up the flagpole"]
 
     adjective = "" if random.random() > 0.5 else "{} ".format(random.choice(adjectives))
@@ -260,7 +259,7 @@ def jargon(name):
     prefix_suffix_seed = random.random()
 
     if prefix_suffix_seed < 0.25:
-        j = "{}, {}".format(j, random.choice(suffix))
+        j = "{} {}".format(j, random.choice(suffix))
     elif prefix_suffix_seed > 0.75:
         j = "{}, {}".format(random.choice(prefix), j)
 

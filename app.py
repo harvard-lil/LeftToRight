@@ -80,7 +80,7 @@ def respond():
     elif 'nicknames' in text:
         users = [nickname(user) for user in users]
     elif 'jargon' in text:
-        users = [nickname(user) for user in users]
+        users = [jargon(user) for user in users]
 
     response = {
         "response_type": "in_channel",

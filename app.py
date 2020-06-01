@@ -263,7 +263,7 @@ def jargon(name):
 
     adjective = "" if random.random() > 0.5 else "{} ".format(random.choice(adjectives))
     j = "{} will {} {}{}".format(
-        name.title(),
+        name.split()[0].title(),
         random.choice(verbs),
         adjective,
         random.choice(plural_nouns)

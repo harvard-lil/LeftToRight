@@ -4,6 +4,7 @@ import random
 from Phyme import Phyme
 
 from flask import Flask, request, jsonify
+
 API_TOKEN = os.environ.get('LTR_SLACK_API_TOKEN')
 LOCAL_TOKEN = os.environ.get('LTR_LOCAL_TOKEN')
 RHYME_AVOID_LIST = os.environ.get('LTR_AVOID_LIST').split(',') if 'LTR_AVOID_LIST' in os.environ else []
@@ -11,6 +12,7 @@ BOT_IGNORE_LIST = os.environ.get('BOT_IGNORE_LIST').split(',') if 'BOT_IGNORE_LI
 
 app = Flask(__name__)
 ph = Phyme()
+
 
 @app.route('/', methods=['POST'])
 def respond():
@@ -37,7 +39,7 @@ def respond():
             "response_type": "in_channel",
             "text": "usage",
             "attachments": [
-                {"text": "{0} executed without arguments will present the scrum order, and with a 60% probability of " 
+                {"text": "{0} executed without arguments will present the scrum order, and with a 60% probability of "
                          "applying a randomly chosen text transformation.".format(command)},
                 {"text": "{0} (normal | 1337 | shifted | nicknames | jargon | random)".format(command)},
                 {"text": "{0} help (displays this message)".format(command)},
@@ -106,6 +108,7 @@ def get_random_rhyme(word):
     except KeyError:
         return None
 
+
 def nickname(name):
     mobster_nicknames = ["Joe Bananas", "Ice Pick Willie", "Johnny Sausage", "Baby Shanks", "Whack-Whack", "Tick–Tock",
                          "Quack Quack", "The Wizard of Odds", "Louie Bagels", "Tommy Sneakers", "Pat the Cat",
@@ -147,6 +150,7 @@ def nickname(name):
                 nick = "{} {}".format(random.choice(nick_prefix), nick)
         return "{} \"{}\" {}".format(name_parts[0], nick, " ".join(name_parts[1:])).title()
 
+
 def shift_vowels(name):
     vowels = ["a", "e", "i", "o", "u", "y"]
     output = ''
@@ -156,6 +160,7 @@ def shift_vowels(name):
         else:
             output += char
     return output.title()
+
 
 # def umlauted(name):
 #     backwards = " ".join(name.lower()[::-1].split()[::-1])
@@ -175,31 +180,31 @@ def shift_vowels(name):
 
 def leet_speak(name):
     leet = {'a': ['4', '@', 'Д'],
-    'b': ['8', 'ß'],
-    'c': ['©', '¢'],
-    'd': ['D'],
-    'e': ['3', '€'],
-    'f': ['pH'],
-    'g': ['6',],
-    'h': ['H'],
-    'i': ['1', '|', '!'],
-    'j': ['J',],
-    'k': ['K',],
-    'l': ['1'],
-    'm': ['|\/|'],
-    'n': ['И'],
-    'o': ['0', 'Ø'],
-    'p': ['p'],
-    'q': ['kw', 'Q'],
-    'r': ['Я', '®'],
-    's': ['5', '$', '§'],
-    't': ['7', '+'],
-    'u': ['U'],
-    'v': ['\/'],
-    'w': ['\X/', 'Ш'],
-    'x': ['Ж'],
-    'y': ['¥', 'Ч'],
-    'z': ['2']}
+            'b': ['8', 'ß'],
+            'c': ['©', '¢'],
+            'd': ['D'],
+            'e': ['3', '€'],
+            'f': ['pH'],
+            'g': ['6', ],
+            'h': ['H'],
+            'i': ['1', '|', '!'],
+            'j': ['J', ],
+            'k': ['K', ],
+            'l': ['1'],
+            'm': ['|\/|'],
+            'n': ['И'],
+            'o': ['0', 'Ø'],
+            'p': ['p'],
+            'q': ['kw', 'Q'],
+            'r': ['Я', '®'],
+            's': ['5', '$', '§'],
+            't': ['7', '+'],
+            'u': ['U'],
+            'v': ['\/'],
+            'w': ['\X/', 'Ш'],
+            'x': ['Ж'],
+            'y': ['¥', 'Ч'],
+            'z': ['2']}
     output = ''
     for char in name.split()[0].lower():
         if char in leet:
@@ -208,8 +213,9 @@ def leet_speak(name):
             output += char
     return "-= {} =-".format(output)
 
+
 def transformation_router(index, input):
-    #transformations = [leet_speak, umlauted, shift_vowels, nickname]
+    # transformations = [leet_speak, umlauted, shift_vowels, nickname]
     transformations = [leet_speak, shift_vowels, nickname, jargon]
     return transformations[index](input)
 
@@ -217,53 +223,59 @@ def transformation_router(index, input):
 def jargon(name):
     verbs = ["reinvent", "unpack", "pencil-in", "touch base on", "maximize", "resonate with", "preplan", "preschedule",
              "push the envelope on", "ideate about", "reincentivize", "deincentivize", "incentivize",
-             "get on board with",
-             "come up to speed on", "reprioritize", "deprioritize", "prioritize"
-                                                                    "fish or cut bait with", "evangelize",
-             "circle the wagons on", "circle back around to", "do a deep dive on",
-             "innovate on", "enact change on", "give 110% on", "leverage", "take it to the next level with",
-             "get buy-in on", "make hay with", "move the needle on", "scale", "vertically integrate", "rearchitect",
-             "punt on", "make a business case for", "be a change agent for", "champion",
-             "proactively guesstimate about",
-             "heard cats for", "raise the bar on", "maintain radio silence on", "reach out about",
-             "avoid reinventing the wheel with", "take strides on", "task", "add value to", "become a stakeholder in",
-             "implement solutions", "monetize", "say \"it is what it is\" about", "bake in", "champion",
-             "avoid boiling the ocean with", "gain traction on", "utilize"]
+             "get on-board with", "come up-to-speed on", "reprioritize", "deprioritize", "prioritize",
+             "fish or cut bait with", "evangelize", "circle the wagons on", "circle back around to",
+             "do a deep dive on", "innovate on", "enact change with", "give 110% using", "leverage",
+             "take it to the next level with", "get buy-in from key stakeholders about", "make hay using",
+             "move the needle on", "scale", "vertically integrate", "rearchitect", "punt on",
+             "make a business case for", "be a change agent for", "champion", "proactively guesstimate about",
+             "heard cats for", "raise the bar with", "maintain radio silence on", "reach out about",
+             "avoid reinventing the wheel with", "take strides on", "task team members with", "add value to",
+             "become a key stakeholder in", "implement solutions for", "monetize", "bake in", "champion",
+             "avoid boiling the ocean with", "gain traction with", "utilize",
+             "heard cats for", "make informed guesstimates about", "re-evaluate", "incorporate feedback about",
+             "minimize the impact of", "let the chips fall where they may with", "wrap their brain around",
+             "do some blue sky thinking about", "move the goalposts on", "drill-down on", "avoid dropping the ball on",
+             "review", "facilitate", "get in-the-loop about", "engange thought leaders on", "eat our own dogfood with"]
 
-    adjectives = ["full-service", "robust", "high price-point", "best of breed", "frictionless", "turnkey",
-                  "game changing", "mission-critical", "proactive", "seamless", "soup-to-nuts", "value-added",
-                  "win-win", "world class", "bleeding-edge"]
+    adjectives = ["full-service", "robust", "high-price-point", "best-of-breed", "frictionless", "turn-key",
+                  "game-changing", "mission-critical", "proactive", "seamless", "soup-to-nuts", "value-added",
+                  "win-win", "world-class", "bleeding-edge", "the highest bang for our buck", "zero-sum",
+                  "belt-and-suspenders", "above-board", "restructured", "user-focused", "risk-managing", "disruptive",
+                  "high-granularity", "critical", "key", "high r.o.i."]
 
-    plural_nouns = ["dogfood", "hard stops", "solutions", "key learnings", "best practices", "core competencies",
-                    "Kool-Aid", "ecosystems", "800lb gorillas", "action items", "spinning plates",
-                    "bells and whistles", "brain dumps", "business cases", "stakeholders", "moving parts",
-                    "best practices",
-                    "change agents", "deliverables", "evangelists", "guesstimates", "hearded cats", "human capital",
-                    "rocket science", "brain surgery", "skin in the game", "valued partners",
-                    "bang for your buck", "low-hanging fruit", "magic bullets", "next steps",
-                    "pain points", "paradigm shifts", "secret sauce", "zero-sum games"]
+    plural_nouns = ["hard stops", "solutions", "learnings", "best practices", "cost analyses",
+                    "core competencies", "ecosystems", "800lb gorilla issues", "action items",
+                    "spinning plates", "bells and whistles", "brain dumps", "business cases", "stakeholders",
+                    "moving parts", "best practices", "change agents", "deliverables", "evangelists", "guesstimates",
+                    "human capital", "rocket science", "brain surgery", "valued partners", "low-hanging fruit",
+                    "magic bullets", "next steps", "pain points", "paradigm shifts", "secret sauce", "litmus tests",
+                    "bio breaks", "life cycles", "markets", "timelines", "strategies", "benchmarks",
+                    "paradigms", "metrics", "red tape"]
 
     prefix = ["Going forward", "At the end of the day", "Where the rubber hits the road",
-              "While we're all on the same page", "While things are still up in the air"]
+              "While we're all on the same page", "While things are still up in the air", "Across the board"]
 
-    suffix = ["with the big wigs", "in the c-suite", ", and throw it over the fence", "on a level playing field",
-              "with a sense of urgency", "with an outside-of-the-box approach", "and run it up the flagpole"]
+    suffix = ["utilizing feedback from the big wigs", "in partnership with the c-suite",
+              "on a level playing field", "with a sense of urgency", "embracing an outside-of-the-box approach",
+              "and run it up the flagpole", "in partnership with key stakeholders",
+              "without just throwing it over-the-fence afterwards", "with an eye towards best practices"]
 
     adjective = "" if random.random() > 0.5 else "{} ".format(random.choice(adjectives))
     j = "{} will {} {}{}".format(
-        name,
+        name.title(),
         random.choice(verbs),
         adjective,
         random.choice(plural_nouns)
     )
     prefix_suffix_seed = random.random()
 
-    if prefix_suffix_seed < 0.25:
+    if prefix_suffix_seed < 0.15:
         j = "{} {}".format(j, random.choice(suffix))
     elif prefix_suffix_seed > 0.75:
         j = "{}, {}".format(random.choice(prefix), j)
 
-    return "{}.".format(j.capitalize())
+    return "{}: {}.".format(name.title(), j.capitalize())
 
 
 if __name__ == '__main__':

@@ -236,30 +236,34 @@ def jargon(name):
              "heard cats for", "make informed guesstimates about", "re-evaluate", "incorporate feedback about",
              "minimize the impact of", "let the chips fall where they may with", "wrap their brain around",
              "do some blue sky thinking about", "move the goalposts on", "drill-down on", "avoid dropping the ball on",
-             "review", "facilitate", "get in-the-loop about", "engange thought leaders on", "eat our own dogfood with"]
+             "review", "facilitate", "get in-the-loop about", "engange thought leaders on", "eat our own dogfood for",
+             "be in a holding pattern until key stakeholders approve", "iron out", "ideate best approaches to",
+             "blueprint", "free up some cycles for"]
 
     adjectives = ["full-service", "robust", "high-price-point", "best-of-breed", "frictionless", "turn-key",
                   "game-changing", "mission-critical", "proactive", "seamless", "soup-to-nuts", "value-added",
                   "win-win", "world-class", "bleeding-edge", "the highest bang for our buck", "zero-sum",
                   "belt-and-suspenders", "above-board", "restructured", "user-focused", "risk-managing", "disruptive",
-                  "high-granularity", "critical", "key", "high r.o.i."]
+                  "high-granularity", "critical", "key"]
 
     plural_nouns = ["hard stops", "solutions", "learnings", "best practices", "cost analyses",
                     "core competencies", "ecosystems", "800lb gorilla issues", "action items",
                     "spinning plates", "bells and whistles", "brain dumps", "business cases", "stakeholders",
-                    "moving parts", "best practices", "change agents", "deliverables", "evangelists", "guesstimates",
+                    "moving parts", "best practices", "change agents", "deliverables", "evangelism", "guesstimates",
                     "human capital", "rocket science", "brain surgery", "valued partners", "low-hanging fruit",
                     "magic bullets", "next steps", "pain points", "paradigm shifts", "secret sauce", "litmus tests",
                     "bio breaks", "life cycles", "markets", "timelines", "strategies", "benchmarks",
-                    "paradigms", "metrics", "red tape"]
+                    "paradigms", "metrics", "red tape", "business practices", "corporate messaging",
+                    "institutional learnings", "institutional knowlege", "key players"]
 
-    prefix = ["Going forward", "At the end of the day", "Where the rubber hits the road",
+    prefix = ["Going forward", "Moving fordward", "At the end of the day", "While key players are in a holding pattern",
               "While we're all on the same page", "While things are still up in the air", "Across the board"]
 
     suffix = ["utilizing feedback from the big wigs", "in partnership with the c-suite",
-              "on a level playing field", "with a sense of urgency", "embracing an outside-of-the-box approach",
+              "on a level playing field", "with a sense of urgency", "embracing out-of-the-box approaches",
               "and run it up the flagpole", "in partnership with key stakeholders",
-              "without just throwing it over-the-fence afterwards", "with an eye towards best practices"]
+              "without just throwing it over-the-fence afterwards", "with an eye towards best practices",
+              "where the rubber hits the road"]
 
     adjective = "" if random.random() > 0.5 else "{} ".format(random.choice(adjectives))
     j = "{} will {} {}{}".format(
@@ -276,6 +280,7 @@ def jargon(name):
         j = "{}, {}".format(random.choice(prefix), j)
 
     return "{}: {}.".format(name.title(), j.capitalize())
+
 
 
 if __name__ == '__main__':

@@ -306,7 +306,7 @@ def cats(name):
                              {"name": "Victoria"}])
     namelist = [namepart.title() for namepart in name.split(' ', 1)]
     if "nickname" in catname and len(namelist) == 1:
-        return "{}, known to be a {}, is {}".format(namelist[0], catname['nickname'], catname['name'])
+        return "{}, known to be the {}, is {}".format(namelist[0], catname['nickname'], catname['name'])
     elif len(namelist) == 1:
         return "{} a.k.a. {}".format(namelist[0], catname['name'])
     elif "nickname" in catname:

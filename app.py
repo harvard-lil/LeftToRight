@@ -41,7 +41,7 @@ def respond():
             "attachments": [
                 {"text": "{0} executed without arguments will present the scrum order, and with a 60% probability of "
                          "applying a randomly chosen text transformation.".format(command)},
-                {"text": "{0} (normal | 1337 | shifted | nicknames | jargon | random)".format(command)},
+                {"text": "{0} (normal | 1337 | shifted | nicknames | jargon | cats | umlauted | random)".format(command)},
                 {"text": "{0} help (displays this message)".format(command)},
             ]
         })
@@ -216,7 +216,7 @@ def leet_speak(name):
 
 def transformation_router(index, input):
     # transformations = [leet_speak, umlauted, shift_vowels, nickname]
-    transformations = [leet_speak, shift_vowels, nickname, jargon]
+    transformations = [leet_speak, umlauted, cats, shift_vowels, nickname, jargon]
     return transformations[index](input)
 
 

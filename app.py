@@ -124,7 +124,7 @@ def nickname(name):
                    "Big Slack Attack", "Beast Mode", "Master", "Steel", "Diamond-Tipped", "Iron", "Cousin", "T-Tops",
                    "T-Bone", "Hackmaster", "Monster", "Grandmaster", "M.C.", "Poker Face", "Gold Tooth", "Maserati",
                    "Fast Talkin'", "Glam", "The Animal", "Maddog", "Doctor"]
-    name_parts = name.split()
+    name_parts = name.split(' ', 1)
     if len(name_parts) < 2:
         nick = get_random_rhyme(name)
 
@@ -162,21 +162,21 @@ def shift_vowels(name):
     return output.title()
 
 
-# def umlauted(name):
-#     backwards = " ".join(name.lower()[::-1].split()[::-1])
-#     vowels = {'a': 'ä', 'e': 'ë', 'i': 'ï', 'o': 'ö', 'u': 'ü', 'y': 'ÿ'}
-#     output = ''
-#     translate = True
-#     for char in backwards:
-#         if translate and char in vowels:
-#             output += vowels[char]
-#             translate = False
-#         elif char == ' ':
-#             output += ' '
-#             translate = True
-#         else:
-#             output += char
-#     return output.title()
+def umlauted(name):
+    backwards = " ".join(name.lower()[::-1].split()[::-1])
+    vowels = {'a': 'ä', 'e': 'ë', 'i': 'ï', 'o': 'ö', 'u': 'ü', 'y': 'ÿ'}
+    output = ''
+    translate = True
+    for char in backwards:
+        if translate and char in vowels:
+            output += vowels[char]
+            translate = False
+        elif char == ' ':
+            output += ' '
+            translate = True
+        else:
+            output += char
+    return output.title()
 
 def leet_speak(name):
     leet = {'a': ['4', '@', 'Д'],
@@ -206,7 +206,7 @@ def leet_speak(name):
             'y': ['¥', 'Ч'],
             'z': ['2']}
     output = ''
-    for char in name.split()[0].lower():
+    for char in name.split(' ', 1)[0].lower():
         if char in leet:
             output += random.choice(leet[char])
         else:
@@ -267,7 +267,7 @@ def jargon(name):
 
     adjective = "" if random.random() > 0.5 else "{} ".format(random.choice(adjectives))
     j = "{} will {} {}{}".format(
-        name.split()[0].title(),
+        name.split(' ', 1)[0].title(),
         random.choice(verbs),
         adjective,
         random.choice(plural_nouns)
@@ -281,6 +281,34 @@ def jargon(name):
 
     return "{}: {}.".format(name.title(), j.capitalize())
 
+
+def cats(name):
+    catname = random.choice([{"name": "Asparagus", "nickname": "Theatre Cat"},
+                             {"name": "Bombalurina"},
+                             {"name": "Bustopher Jones", "nickname": "Cat About Town"},
+                             {"name": "Demeter"},
+                             {"name": "Grizabella"},
+                             {"name": "Jellylorum"},
+                             {"name": "Sillabub"},
+                             {"name": "Jennyanydots", "nickname": "Old Gumbie Cat"},
+                             {"name": "Macavity", "nickname": "Mystery Cat"},
+                             {"name": "Mr. Mistoffelees"},
+                             {"name": "Mungojerrie"},
+                             {"name": "Munkustrap"},
+                             {"name": "Old Deuteronomy"},
+                             {"name": "Rumpleteazer"},
+                             {"name": "Rum Tum Tugger"},
+                             {"name": "Skimbleshanks", "nickname": "Railway Cat"},
+                             {"name": "Victoria"}])
+    namelist = [namepart.title() for namepart in name.split(' ', 1)]
+    if "nickname" in catname and len(namelist) == 1:
+        return "{}, known to be a {}, is {}".format(namelist[0], catname['nickname'], catname['name'])
+    elif len(namelist) == 1:
+        return "{} a.k.a. {}".format(namelist[0], catname['name'])
+    elif "nickname" in catname:
+        return "{} \"{}\" {} is the {}".format(namelist[0], catname['name'], namelist[1], catname['nickname'])
+    else:
+        return "{} \"{}\" {}".format(namelist[0], catname['name'], namelist[1])
 
 
 if __name__ == '__main__':

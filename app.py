@@ -83,6 +83,10 @@ def respond():
         users = [nickname(user) for user in users]
     elif 'jargon' in text:
         users = [jargon(user) for user in users]
+    elif 'umlauted' in text:
+        users = [umlauted(user) for user in users]
+    elif 'cats' in text:
+        users = [cats(user) for user in users]
 
     response = {
         "response_type": "in_channel",

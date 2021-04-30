@@ -20,7 +20,6 @@ In your environment (shell, etc.) you'll need these variables set:
 ```
 export LTR_SLACK_API_TOKEN='xoxb-[etc.]' # your slack bot API token which slack uses to validate requests coming from your app
 export LTR_LOCAL_TOKEN='somerandomsecret' # your locally set token which this app uses to validate requests coming from slack
-export LTR_AVOID_LIST='random' # (optional) Comma-delimited list of words not to serve if they come up as rhyming words 
 ```
 
 You'll also need :

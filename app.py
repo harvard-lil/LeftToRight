@@ -7,8 +7,6 @@ from flask import Flask, request, jsonify
 
 API_TOKEN = os.environ.get('LTR_SLACK_API_TOKEN')
 LOCAL_TOKEN = os.environ.get('LTR_LOCAL_TOKEN')
-RHYME_AVOID_LIST = os.environ.get('LTR_AVOID_LIST').split(',') \
-    if 'LTR_AVOID_LIST' in os.environ else []
 BOT_IGNORE_LIST = os.environ.get('BOT_IGNORE_LIST').split(',') \
     if 'BOT_IGNORE_LIST' in os.environ else []
 

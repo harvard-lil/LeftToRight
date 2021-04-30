@@ -32,3 +32,9 @@ app being served from http://deployed.wow/ltr/, this would yield a successful qu
 In the command itself, you can specify a transformation by passing— 1337, shifted, or nicknames— or no transformation by
 passing 'normal'. Without specifying, the command follows the default behavior or choosing a random transformation a
 a little over half the time.
+
+If you're doing development on this application, use [poetry](https://python-poetry.org/) to manage Python packages, but make sure to run
+
+    poetry export -o requirements.txt
+
+for deployment purposes, if there are any changes to `poetry.lock`.

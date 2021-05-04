@@ -1,4 +1,5 @@
 import random
+import string
 
 
 transformations = dict()
@@ -252,3 +253,8 @@ def cats(name):
         return f"{n} \"{cat}\" {namelist[1]} is the {catname['nickname']}"
     else:
         return f"{n} \"{cat}\" {namelist[1]}"
+
+
+@register
+def experiment(name):
+    return ''.join(sorted(name.lower().replace(' ', '').translate(str.maketrans('', '', string.punctuation))))  # noqa

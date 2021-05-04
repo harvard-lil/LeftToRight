@@ -256,5 +256,15 @@ def cats(name):
 
 
 @register
-def experiment(name):
-    return ''.join(sorted(name.lower().replace(' ', '').translate(str.maketrans('', '', string.punctuation))))  # noqa
+def orderly(name):
+    no_space_punct = ''.maketrans('', '', f' {string.punctuation}')
+    return ''.join(sorted(name.lower().translate(no_space_punct)))
+
+
+@register
+def barking(name):
+    syllables = ['arf', 'woof', 'yap', 'yip', 'ruff', 'grrr']
+    first = name.split(' ')[0]
+    dog = ' '.join(list(map(lambda x:
+                            syllables[hash(x) % len(syllables)], first)))
+    return f'{dog} ({first})'

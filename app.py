@@ -62,8 +62,9 @@ def respond():
         # rather than just randomly selecting between the transformations,
         # let make it only half-likely you'll get a transformation to make
         # it feel more special
-        text = random.choice(['normal',
-                              random.choice(list(transformations.keys()))])
+        keys = list(transformations.keys())
+        keys.remove('normal')
+        text = random.choice(['normal', random.choice(keys)])
     try:
         users = [transformations[text](user) for user in users]
     except KeyError:

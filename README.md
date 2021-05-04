@@ -46,3 +46,6 @@ for deployment purposes, if there are any changes to `poetry.lock`.
 If you want to add transformations, you can put them in
 [transformations.py](transformations.py) and decorate them with
 `@register`.
+
+The few doctests present so far can be exercised by running `poetry
+run pytest`.

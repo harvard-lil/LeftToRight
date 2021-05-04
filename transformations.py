@@ -15,6 +15,9 @@ def register(transformation):
 
 @register
 def normal(name):
+    """
+    >>> assert normal('hello') == 'hello'
+    """
     return name
 
 
@@ -257,12 +260,21 @@ def cats(name):
 
 @register
 def orderly(name):
+    """
+    >>> assert orderly('Jack Sprat') == 'aacjkprst'
+    >>> assert orderly('Mrs. Tiggywinkle') == 'eggiiklmnrstwy'
+    """
     no_space_punct = ''.maketrans('', '', f' {string.punctuation}')
     return ''.join(sorted(name.lower().translate(no_space_punct)))
 
 
 @register
 def barking(name):
+    """
+    >>> bark = barking('Jack Sprat')
+    >>> assert ' (Jack)' in bark
+    >>> assert len(bark.split(' ')) == 5
+    """
     syllables = ['arf', 'woof', 'yap', 'yip', 'ruff', 'grrr']
     first = name.split(' ')[0]
     dog = ' '.join(list(map(lambda x:

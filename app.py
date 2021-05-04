@@ -31,7 +31,7 @@ def respond():
             "response_type": "in_channel",
             "text": "usage",
             "attachments": [
-                {"text": f"{command} executed without arguments will present the scrum order, and with a 60% probability of applying a randomly chosen text transformation."},  # noqa
+                {"text": f"{command} executed without arguments will present the scrum order, and with a 50% probability of applying a randomly chosen text transformation."},  # noqa
                 {"text": f"{command} ({' | '.join(transformations.keys())})"},  # noqa
                 {"text": f"{command} help (displays this message)"},
             ]
@@ -67,7 +67,7 @@ def respond():
     try:
         users = [transformations[text](user) for user in users]
     except KeyError:
-        return f"I don't understand \"{text}\""
+        return f"I don't understand '{text}', try 'help'."
 
     response = {
         "response_type": "in_channel",

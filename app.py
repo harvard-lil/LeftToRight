@@ -21,7 +21,7 @@ def respond():
     """
     incoming_token = request.args.get("token", None)
     if not incoming_token or incoming_token != LOCAL_TOKEN:
-        raise Exception("local key error")
+        return ('', 404)
 
     channel_id = request.form['channel_id']
     command = request.form['command']

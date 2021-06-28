@@ -66,15 +66,24 @@ def respond():
         keys.remove('normal')
         text = random.choice(['normal', random.choice(keys)])
     try:
-        users = [transformations[text](user) for user in users]
+        order = [transformations[text](user) for user in users]
     except KeyError:
         return f"I don't understand '{text}', try 'help'."
+
+    # differentiate duplicates, e.g. when the transformation only uses
+    # first name and is deterministic.
+    duplicates = []
+    for k, v in enumerate(order):
+        if v in order[0:k] + order[k+1:]:
+            duplicates.append(k)
+    for k in duplicates:
+        order[k] += f' ({users[k]})'
 
     response = {
         "response_type": "in_channel",
         "text": "Scrum Order: ",
         "attachments":
-            [{"text": "{}: {}".format(k + 1, v)} for k, v in enumerate(users)]
+            [{"text": "{}: {}".format(k + 1, v)} for k, v in enumerate(order)]
     }
 
     return jsonify(response)

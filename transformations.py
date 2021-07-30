@@ -1,5 +1,4 @@
 import random
-import string
 
 
 transformations = dict()
@@ -92,43 +91,6 @@ def umlauted(name):
         else:
             output += char
     return output.title()
-
-
-@register
-def leet(name):
-    leet = {'a': ['4', '@', 'Д'],
-            'b': ['8', 'ß'],
-            'c': ['©', '¢'],
-            'd': ['D'],
-            'e': ['3', '€'],
-            'f': ['pH'],
-            'g': ['6', ],
-            'h': ['H'],
-            'i': ['1', '|', '!'],
-            'j': ['J', ],
-            'k': ['K', ],
-            'l': ['1'],
-            'm': ['|\/|'],  # noqa
-            'n': ['И'],
-            'o': ['0', 'Ø'],
-            'p': ['p'],
-            'q': ['kw', 'Q'],
-            'r': ['Я', '®'],
-            's': ['5', '$', '§'],
-            't': ['7', '+'],
-            'u': ['U'],
-            'v': ['\/'],  # noqa
-            'w': ['\X/', 'Ш'],  # noqa
-            'x': ['Ж'],
-            'y': ['¥', 'Ч'],
-            'z': ['2']}
-    output = ''
-    for char in name.split(' ', 1)[0].lower():
-        if char in leet:
-            output += random.choice(leet[char])
-        else:
-            output += char
-    return "-= {} =-".format(output)
 
 
 @register
@@ -256,27 +218,3 @@ def cats(name):
         return f"{n} \"{cat}\" {namelist[1]} is the {catname['nickname']}"
     else:
         return f"{n} \"{cat}\" {namelist[1]}"
-
-
-@register
-def orderly(name):
-    """
-    >>> assert orderly('Jack Sprat') == 'aacjkprst'
-    >>> assert orderly('Mrs. Tiggywinkle') == 'eggiiklmnrstwy'
-    """
-    no_space_punct = ''.maketrans('', '', f' {string.punctuation}')
-    return ''.join(sorted(name.lower().translate(no_space_punct)))
-
-
-@register
-def barking(name):
-    """
-    >>> bark = barking('Jack Sprat')
-    >>> assert ' (Jack)' in bark
-    >>> assert len(bark.split(' ')) == 5
-    """
-    syllables = ['arf', 'woof', 'yap', 'yip', 'ruff', 'grrr']
-    first = name.split(' ')[0]
-    dog = ' '.join(list(map(lambda x:
-                            syllables[hash(x) % len(syllables)], first)))
-    return f'{dog} ({first})'

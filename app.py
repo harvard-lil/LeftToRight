@@ -84,7 +84,7 @@ def respond():
         "response_type": "in_channel",
         "text": "Scrum Order: ",
         "attachments":
-            [{"text": "{}: {}".format(yan_tan(k + 1),
+            [{"text": "{}: {}".format(yan_tan(k),
                                       v)} for k, v in enumerate(order)]
     }
 

@@ -5,7 +5,7 @@ import random
 from flask import Flask, request, jsonify
 
 from transformations import transformations
-from counting import yan_tan
+from counting import count
 
 API_TOKEN = os.environ.get('LTR_SLACK_API_TOKEN')
 LOCAL_TOKEN = os.environ.get('LTR_LOCAL_TOKEN')
@@ -84,7 +84,7 @@ def respond():
         "response_type": "in_channel",
         "text": "Scrum Order: ",
         "attachments":
-            [{"text": "{}: {}".format(yan_tan(k),
+            [{"text": "{}: {}".format(count(k),
                                       v)} for k, v in enumerate(order)]
     }
 

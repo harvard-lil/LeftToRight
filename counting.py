@@ -1,5 +1,5 @@
 import random
-import num2words
+from num2words import num2words
 
 
 languages = [
@@ -13,7 +13,7 @@ languages = [
     'es',
     'es_CO',
     'es_VE',
-    'eu',
+    # 'eu',  # not implemented
     'fi',
     'fr',
     'fr_CH',

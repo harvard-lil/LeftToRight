@@ -52,12 +52,14 @@ def count(n):
     """
     r = random.random()
     if r < 0.2:
-        return n + 1
+        return str(n + 1)
     elif r < 0.4:
         return yan_tan(n)
     else:
-        return num2words(n + 1, lang=random.choice(languages))
-
+        try:
+            return num2words(n + 1, lang=random.choice(languages))
+        except NotImplementedError:
+            return str(n + 1)
 
 def yan_tan(n):
     """

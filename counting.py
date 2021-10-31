@@ -2,6 +2,9 @@ import random
 from num2words import num2words
 
 
+# maintaining this list should not be necessary once
+# https://github.com/savoirfairelinux/num2words/pull/208,
+# which implements supported_lang, is merged and released
 languages = [
     'en',
     'ar',

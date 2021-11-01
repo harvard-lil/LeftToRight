@@ -59,11 +59,12 @@ def count(ns):
     elif r < 0.4:
         return [yan_tan(n) for n in ns]
     else:
-        try:
-            language = random.choice(languages)
-            return [num2words(n + 1, lang=language) for n in ns]
-        except NotImplementedError:
-            return [str(n + 1) for n in ns]
+        while True:
+            try:
+                language = random.choice(languages)
+                return [num2words(n + 1, lang=language) for n in ns]
+            except NotImplementedError:
+                pass
 
 
 def yan_tan(n):

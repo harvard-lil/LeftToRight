@@ -64,6 +64,7 @@ def count(n):
         except NotImplementedError:
             return str(n + 1)
 
+
 def yan_tan(n):
     """
     from https://en.wikipedia.org/wiki/Yan_tan_tethera

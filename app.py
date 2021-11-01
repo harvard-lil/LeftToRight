@@ -80,11 +80,13 @@ def respond():
     for k in duplicates:
         order[k] += f' ({users[k]})'
 
+    counts = count(range(len(order)))
+
     response = {
         "response_type": "in_channel",
         "text": "Scrum Order: ",
         "attachments":
-            [{"text": "{}: {}".format(count(k),
+            [{"text": "{}: {}".format(counts[k],
                                       v)} for k, v in enumerate(order)]
     }
 

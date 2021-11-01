@@ -47,7 +47,7 @@ languages = [
 ]
 
 
-def count(n):
+def count(ns):
     """
     Manager for randomizing counting systems;
     input is expected to be zero-based, and output is
@@ -55,14 +55,15 @@ def count(n):
     """
     r = random.random()
     if r < 0.2:
-        return str(n + 1)
+        return [str(n + 1) for n in ns]
     elif r < 0.4:
-        return yan_tan(n)
+        return [yan_tan(n) for n in ns]
     else:
         try:
-            return num2words(n + 1, lang=random.choice(languages))
+            language = random.choice(languages)
+            return [num2words(n + 1, lang=language) for n in ns]
         except NotImplementedError:
-            return str(n + 1)
+            return [str(n + 1) for n in ns]
 
 
 def yan_tan(n):

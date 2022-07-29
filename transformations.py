@@ -76,24 +76,6 @@ def shifted(name):
 
 
 @register
-def umlauted(name):
-    backwards = " ".join(name.lower()[::-1].split()[::-1])
-    vowels = {'a': 'ä', 'e': 'ë', 'i': 'ï', 'o': 'ö', 'u': 'ü', 'y': 'ÿ'}
-    output = ''
-    translate = True
-    for char in backwards:
-        if translate and char in vowels:
-            output += vowels[char]
-            translate = False
-        elif char == ' ':
-            output += ' '
-            translate = True
-        else:
-            output += char
-    return output.title()
-
-
-@register
 def jargon(name):
     verbs = ["reinvent", "unpack", "pencil-in", "touch base on", "maximize",
              "resonate with", "preplan", "preschedule", "push the envelope on",

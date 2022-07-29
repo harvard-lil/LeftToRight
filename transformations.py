@@ -74,6 +74,7 @@ def shifted(name):
             output += char
     return output.title()
 
+
 @register
 def jargon(name):
     verbs = ["reinvent", "unpack", "pencil-in", "touch base on", "maximize",

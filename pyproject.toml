@@ -10,6 +10,7 @@ Flask = "^1.1.2"
 requests = "^2.25.1"
 gunicorn = "^20.1.0"
 num2words = "^0.5.10"
+markupsafe = "2.0.1"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.1"

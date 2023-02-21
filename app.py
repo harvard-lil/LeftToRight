@@ -35,6 +35,7 @@ def respond():
                 {"text": f"{command} executed without arguments will present the scrum order, and with a 50% probability of applying a randomly chosen text transformation."},  # noqa
                 {"text": f"{command} ({' | '.join(transformations.keys())})"},  # noqa
                 {"text": f"{command} help (displays this message)"},
+                {"text": "Adding `private` to the arguments will make the output visible only to you, like this help message."},  # noqa
             ]
         })
 
@@ -58,6 +59,11 @@ def respond():
         users.append(name['user']['real_name'].title())
 
     random.shuffle(users)
+
+    private = False
+    if 'private' in text:
+        text = text.replace('private', '').strip()
+        private = True
 
     if not text or 'random' in text or text == '':
         # rather than just randomly selecting between the transformations,
@@ -83,12 +89,14 @@ def respond():
     counts = count(range(len(order)))
 
     response = {
-        "response_type": "in_channel",
         "text": "Scrum Order: ",
         "attachments":
             [{"text": "{}: {}".format(counts[k],
                                       v)} for k, v in enumerate(order)]
     }
+
+    if not private:
+        response.update({"response_type": "in_channel"})
 
     return jsonify(response)
 

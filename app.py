@@ -28,8 +28,8 @@ def respond():
     command = request.form['command']
     text = request.form['text'].lower() if 'text' in request.form else 'random'
     if 'help' in text:
+        # send ephemeral message
         return jsonify({
-            "response_type": "in_channel",
             "text": "usage",
             "attachments": [
                 {"text": f"{command} executed without arguments will present the scrum order, and with a 50% probability of applying a randomly chosen text transformation."},  # noqa

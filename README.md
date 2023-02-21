@@ -1,5 +1,7 @@
 # LeftToRight
 
+[![Tests](https://github.com/harvard-lil/LeftToRight/actions/workflows/tests.yml/badge.svg)](https://github.com/harvard-lil/LeftToRight/actions)
+
 Provides a suggested order for members of a channel doing a virtual
 standup. It grabs a list of members in the channel from which the
 slash command was called, and returns them in a randomized list,

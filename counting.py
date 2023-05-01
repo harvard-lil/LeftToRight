@@ -73,20 +73,30 @@ def yan_tan(n):
     input is expected to be zero-based
     """
     systems = {
-        'derbyshire_dales': [
+        'lincolnshire': [
             'yan',
-            'tan',
+            'teyan',
             'tethera',
             'methera',
-            'pip',
-            'sethera',
-            'lethera',
-            'hovera',
-            'dovera',
-            'dick'
+            'tic',
+            'yan-a-tic',
+            'teyan-a-tic',
+            'tethera-tic',
+            'methera-tic',
+            'bub',
+            'yan-a-bub',
+            'teyan-a-bub',
+            'tethera-bub',
+            'methera-bub',
+            'tic-a-bub',
+            'yan-tic-a-bub',
+            'teyan-tic-a-bub',
+            'tethera-tic-a-bub',
+            'methera-tic-a-bub',
+            'gigget'
         ]
     }
     try:
-        return systems['derbyshire_dales'][n]
+        return systems['lincolnshire'][n]
     except IndexError:
         return str(n + 1)

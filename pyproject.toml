@@ -2,7 +2,7 @@
 name = "lefttoright"
 version = "0.1.9"
 description = ""
-authors = ["Andrew Silva <asilva@law.harvard.edu", "Ben Steinberg <bsteinberg@law.harvard.edu>"]
+authors = ["Andrew Silva <asilva@law.harvard.edu>", "Ben Steinberg <bsteinberg@law.harvard.edu>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
